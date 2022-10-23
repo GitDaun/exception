@@ -1,18 +1,33 @@
+package hello.exception.servlet;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ServletExcontroller", value = "/ServletExcontroller")
-public class ServletExcontroller extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@Slf4j
+@Controller
+public class ServletExController {
 
-    }
+  @GetMapping("/error-ex")
+  public void errorEx(){
+    throw new RuntimeException("Error Occurred!!");
+  }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  @GetMapping("/error-400")
+  public void error400(HttpServletResponse response) throws IOException {
+    response.sendError(400, "400에러 발생");
+  }
 
-    }
+  @GetMapping("/error-404")
+  public void error404(HttpServletResponse response) throws IOException {
+    response.sendError(404, "404에러 발생");
+  }
+
+  @GetMapping("/error-500")
+  public void error500(HttpServletResponse response) throws IOException {
+    response.sendError(500);
+  }
 }
